@@ -12,6 +12,7 @@ import {
     ScrollView,
     Animated,
     InteractionManager,
+    Platform
 } from 'react-native'
 
 export default class EZSwiper extends Component<{}> {
@@ -58,7 +59,7 @@ export default class EZSwiper extends Component<{}> {
         this.autoPlay = this.autoPlay.bind(this)
         this.stopAutoPlay = this.stopAutoPlay.bind(this)
 
-        const { dataSource, width, height, horizontal, offset,index, loop, ratio, autoplayTimeout, autoplayDirection, cardParams } = this.props;
+        const { dataSource, width, height, horizontal, offset, index, loop, ratio, autoplayTimeout, autoplayDirection, cardParams } = this.props;
 
         const side = horizontal ? width : height
         const cardSide = cardParams.cardSide || side * ratio
@@ -75,11 +76,11 @@ export default class EZSwiper extends Component<{}> {
             loop: loop,
             autoplayTimeout: autoplayTimeout,
             autoplayDirection: autoplayDirection,
-            offset:offset,
+            offset: offset,
         }
 
-        this.scrollIndex = (this.ezswiper.loop ? this.ezswiper.currentIndex + 1 : this.ezswiper.currentIndex)        
-        
+        this.scrollIndex = (this.ezswiper.loop ? this.ezswiper.currentIndex + 1 : this.ezswiper.currentIndex)
+
         const scaleArray = [];
         const translateArray = [];
         for (let i = 0; i < this.ezswiper.count + 2; i++) {
@@ -101,9 +102,9 @@ export default class EZSwiper extends Component<{}> {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(JSON.stringify(nextProps)==JSON.stringify(this.props)) return;
+        if (JSON.stringify(nextProps) == JSON.stringify(this.props)) return;
         this.stopAutoPlay()
-        const { dataSource, width, height, horizontal, offset,index, loop, ratio, autoplayTimeout, autoplayDirection, cardParams } = nextProps;
+        const { dataSource, width, height, horizontal, offset, index, loop, ratio, autoplayTimeout, autoplayDirection, cardParams } = nextProps;
 
         const side = horizontal ? width : height
         const cardSide = cardParams.cardSide || side * ratio
@@ -120,10 +121,10 @@ export default class EZSwiper extends Component<{}> {
             loop: loop,
             autoplayTimeout: autoplayTimeout,
             autoplayDirection: autoplayDirection,
-            offset:offset,
+            offset: offset,
         }
 
-        this.scrollIndex = (this.ezswiper.loop ? this.ezswiper.currentIndex + 1 : this.ezswiper.currentIndex)        
+        this.scrollIndex = (this.ezswiper.loop ? this.ezswiper.currentIndex + 1 : this.ezswiper.currentIndex)
 
         if (this.props.dataSource.length !== dataSource.length) {
             const scaleArray = [];
@@ -241,10 +242,10 @@ export default class EZSwiper extends Component<{}> {
             if (this.ezswiper.loop) {
                 if (Math.abs(offset - ((this.ezswiper.count + 1) * this.ezswiper.side)) < 20.1) {
                     offset = this.ezswiper.side
-                    this.scrollView.scrollTo({ [this.ezswiper.scrollToDirection]: offset, animated: false });
+                    this.scrollView.scrollTo({ [this.ezswiper.scrollToDirection]: offset, animated: Platform.OS === 'ios' ? false : true });
                 } else if (Math.abs(offset) < 20.1) {
                     offset = this.ezswiper.side * this.ezswiper.count
-                    this.scrollView.scrollTo({ [this.ezswiper.scrollToDirection]: offset, animated: false });
+                    this.scrollView.scrollTo({ [this.ezswiper.scrollToDirection]: offset, animated: Platform.OS === 'ios' ? false : true });
                 }
             }
 
