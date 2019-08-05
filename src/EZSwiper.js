@@ -12,9 +12,10 @@ import {
     ScrollView,
     Animated,
     InteractionManager,
-    Platform
+    Platform,
+    Dimensions
 } from 'react-native'
-
+let screenWidth = Dimensions.get('window').width;
 export default class EZSwiper extends Component<{}> {
     /**
     | -------------------------------------------------------
@@ -296,13 +297,13 @@ export default class EZSwiper extends Component<{}> {
             const currentItem = this.ezswiper.dataSource[dataSourceIndex]
             views.push(
                 <View key={i} style={{ flexDirection: this.ezswiper.horizontal ? 'row' : 'column' }}>
-                    <View style={{ [this.ezswiper.horizontal ? 'width' : 'height']: margin + this.ezswiper.offset, backgroundColor: 'transparent' }} />
+                    <View style={{ [this.ezswiper.horizontal ? 'width' : 'height']: 15, backgroundColor: 'transparent' }} />
                     <TouchableWithoutFeedback accessible={!!this.props.onPress} onPress={() => this.events.onPress(currentItem, dataSourceIndex)}>
-                        <Animated.View style={{ backgroundColor: 'transparent', width: this.ezswiper.horizontal ? this.ezswiper.cardParams.cardSide : width, height: this.ezswiper.horizontal ? height : this.ezswiper.cardParams.cardSide, transform: [{ [this.ezswiper.horizontal ? 'scaleY' : 'scaleX']: scaleArray[i] }, { [this.ezswiper.horizontal ? 'translateX' : 'translateY']: translateArray[i] }] }} >
+                        <Animated.View style={{ backgroundColor: 'transparent', width: screenWidth - 30, height: this.ezswiper.horizontal ? height : this.ezswiper.cardParams.cardSide, transform: [{ [this.ezswiper.horizontal ? 'scaleY' : 'scaleX']: scaleArray[i] }, { [this.ezswiper.horizontal ? 'translateX' : 'translateY']: translateArray[i] }] }} >
                             {this.events.renderRow(currentItem, dataSourceIndex)}
                         </Animated.View>
                     </TouchableWithoutFeedback>
-                    <View style={{ [this.ezswiper.horizontal ? 'width' : 'height']: margin - this.ezswiper.offset, backgroundColor: 'transparent' }} />
+                    <View style={{ [this.ezswiper.horizontal ? 'width' : 'height']: 15, backgroundColor: 'transparent' }} />
                 </View>
             );
         }
