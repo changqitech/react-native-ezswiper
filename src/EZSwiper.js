@@ -139,16 +139,11 @@ export default class EZSwiper extends Component<{}> {
 
     }
 
-    componentDidMount() {
-        setTimeout(() => {
-            InteractionManager.runAfterInteractions(() => {
-                this.scrollView && this.scrollView.scrollTo({ [this.ezswiper.scrollToDirection]: (this.ezswiper.side * this.scrollIndex), animated: false });
-                this.updateAnimated(this.scrollIndex, this.scrollIndex)
-                this.autoPlay()
-                this.setState({ initialized: true });
-            });
-        }, 100);
-
+   componentDidMount() {
+        this.scrollView && this.scrollView.scrollTo({ [this.ezswiper.scrollToDirection]: (this.ezswiper.side * this.scrollIndex), animated: false });
+        this.updateAnimated(this.scrollIndex, this.scrollIndex)
+        this.autoPlay()
+        this.setState({ initialized: true });
     }
 
 
